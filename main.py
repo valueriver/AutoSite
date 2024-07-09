@@ -25,22 +25,21 @@ WORKER_DIRECTORY = os.path.join(os.getcwd(), "xxxx")
 # 部署在vercel的网站地址
 VERCEL_SITE_URL = 'https://xxxx.vercel.app'
 
-
 def run():
     prompt_content = prompt.replace("{VERCEL_SITE_URL}", VERCEL_SITE_URL)
     messages = [{"role": "system", "content": prompt_content}]
     api = OpenAIAPI(API_KEY, API_URL)
 
     while True:
-        user_input = input("User: ")
+        user_input = input("👤: ")
         messages.append({"role": "user", "content": user_input})
         while True:
             response = api.oneapi(messages, model="gpt-4o", tools=tools, choices="auto", response_format=None)
             if response['type'] == 'message':
                 response_message = response['message']
-                print("Assistant:", response_message)
+                print("🤖:", response_message)
                 messages.append({"role": "assistant", "content": response_message})
-                break  # 结束内部循环
+                break  
             elif response['type'] == 'tools':
                 messages.append(response['message'])
                 tool_calls = response['tools']
