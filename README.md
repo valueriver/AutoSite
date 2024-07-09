@@ -6,7 +6,9 @@ AutoSite 是一个人工智能驱动的自动化网站机器人项目，旨在�
 
 ### 1. 环境准备
 
-确保你的系统已安装 Python 和 Node.js。
+确保你的系统已安装 Python 
+
+如果想让ai编写后端api，那么需要安装Node
 
 ### 2. 克隆 AutoSite 项目
 
@@ -19,7 +21,7 @@ cd autosite
 
 ### 3. 创建新的 GitHub 项目
 
-创建一个新的私有仓库，这将是你的网站项目仓库。
+创建一个新的私有仓库，仓库中创建一个基础的index.html文件，里面可以随便写点内容，例如：hello world。
 
 ### 4. 在 AutoSite 根目录克隆新项目
 

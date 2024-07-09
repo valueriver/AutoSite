@@ -4,7 +4,7 @@ import subprocess
 
 def get_directory_structure(directory):
     
-    print(f"[📁 读取工作目录]:{directory}")
+    print(f"[📁读取工作目录]:{directory}")
     
     if not os.path.exists(directory):
         return json.dumps({
@@ -29,7 +29,7 @@ def get_directory_structure(directory):
 
 def write_to_file(data, filename, directory):
     
-    print(f"[⌨️ 创建文件]：{filename}")
+    print(f"[⌨️创建文件]：{filename}")
     
     os.makedirs(directory, exist_ok=True)
     filepath = os.path.join(directory, filename)
@@ -43,7 +43,7 @@ def write_to_file(data, filename, directory):
 
 def read_from_file(filename, directory):
     
-    print(f"[💾 读取文件]：{filename}")
+    print(f"[💾读取文件]：{filename}")
 
     filepath = os.path.join(directory, filename)
 
