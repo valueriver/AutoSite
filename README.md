@@ -15,8 +15,8 @@ AutoSite 是一个人工智能驱动的自动化网站机器人项目，旨在�
 首先，克隆 AutoSite 项目到本地：
 
 ```
-git clone https://github.com/your-username/autosite.git
-cd autosite
+git clone https://github.com/valueriver/AutoSite
+cd AutoSite
 ```
 
 ### 3. 创建新的 GitHub 项目
