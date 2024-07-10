@@ -21,7 +21,7 @@ cd AutoSite
 
 ### 3. 创建新的 GitHub 项目
 
-创建一个新的私有仓库，仓库中创建一个基础的index.html文件，里面可以随便写点内容，例如：hello world。
+创建一个新的私有仓库，仓库中创建一个基础的index.html文件，里面可以随便写点内容，例如：hello world。仓库中创建一个空的api目录，该目录用于部署后端云函数的目录。
 
 ### 4. 在 AutoSite 根目录克隆新项目
 
