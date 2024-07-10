@@ -1,7 +1,7 @@
 import os
 import json
 import subprocess
-
+import platform
 
 def get_directory_structure(directory=None):
     if directory is None:
@@ -30,7 +30,6 @@ def get_directory_structure(directory=None):
         }
     })
 
-
 def write_to_file(data, filename, directory=None):
     if directory is None:
         directory = os.getcwd()
@@ -47,8 +46,7 @@ def write_to_file(data, filename, directory=None):
     except Exception as e:
         return json.dumps({"status": "error", "message": str(e)})
 
-
-def read_from_file(filename,  directory=None):
+def read_from_file(filename, directory=None):
     if directory is None:
         directory = os.getcwd()
 
@@ -63,8 +61,7 @@ def read_from_file(filename,  directory=None):
     except FileNotFoundError:
         return json.dumps({"status": "error", "message": f"{filepath} not found"})
 
-
-def run_powershell_command(command, directory=None):
+def run_shell_command(command, directory=None):
     if directory is None:
         directory = os.getcwd()
 
@@ -72,9 +69,15 @@ def run_powershell_command(command, directory=None):
 
     warning = None
 
+    # 根据操作系统选择适当的 shell
+    if platform.system() == "Windows":
+        shell = ["powershell", "-Command"]
+    else:
+        shell = ["sh", "-c"]
+
     try:
-        result = subprocess.run(["powershell", "-Command", command],
-                                cwd=directory, capture_output=True, text=True, shell=True)
+        result = subprocess.run(shell + [command],
+                                cwd=directory, capture_output=True, text=True, shell=False)
         return json.dumps({
             "status": "success",
             "output": result.stdout,
@@ -88,12 +91,11 @@ def run_powershell_command(command, directory=None):
             "warning": warning
         })
 
-
 available_functions = {
     "write_to_file": write_to_file,
     "read_from_file": read_from_file,
     "get_directory_structure": get_directory_structure,
-    "run_powershell_command": run_powershell_command
+    "run_shell_command": run_shell_command
 }
 
 def RunTools(tool_calls):

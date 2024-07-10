@@ -117,7 +117,7 @@ tools = [
     {
         "type": "function",
         "function": {
-            "name": "run_powershell_command",
+            "name": "run_shell_command",
             "description": "Run a PowerShell command in the specified directory, defaulting to the current directory",
             "parameters": {
                 "type": "object",
