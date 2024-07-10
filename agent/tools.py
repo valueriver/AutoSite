@@ -55,6 +55,7 @@ def read_from_file(filename, directory):
         return json.dumps({"status": "error", "message": f"{filepath} not found"})
 
 def run_powershell_command(command, directory):
+    
     print(f"[📟执行命令]：{command}")
 
     warning = None
