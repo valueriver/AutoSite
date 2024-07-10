@@ -110,9 +110,6 @@
                 sendMessage() {
                     if (this.userInput.trim() === '') return;
 
-                    this.$nextTick(() => {
-                        this.scrollToBottom();
-                    });
 
                     const userMessage = {
                         role: 'user',
@@ -121,7 +118,10 @@
                     };
                     this.messages.push(userMessage);
 
-                    // 这里应该发送请求到您的后端 API
+                    this.$nextTick(() => {
+                        this.scrollToBottom();
+                    });
+
                     fetch('/chat', {
                         method: 'POST',
                         headers: {
