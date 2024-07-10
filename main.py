@@ -4,14 +4,14 @@ from agent.config import prompt, tools
 
 import os
 
-# openai api key
-API_KEY = 'sk-xxxx'
-# openai api url
-API_URL = 'https://xxxx/v1/chat/completions'
-# 你克隆的项目的目录名称，例如你创建的项目叫GPT5，那么克隆完成后就会有一个GPT5的目录，这里就填写GPT5
-WORKER_DIRECTORY = os.path.join(os.getcwd(), "xxxx")
-# 部署在vercel的网站地址
-VERCEL_SITE_URL = 'https://xxxx.vercel.app'
+# 从环境变量中获取OpenAI API密钥
+API_KEY = os.getenv('OPENAI_API_KEY')
+# 从环境变量中获取OpenAI API URL
+API_URL = os.getenv('OPENAI_API_URL')
+# 从环境变量中获取克隆的项目的目录名称
+GIT_DIRECTORY = os.path.join(os.getcwd(), os.getenv('GIT_DIRECTORY'))
+# 从环境变量中获取部署在vercel的网站地址
+VERCEL_SITE_URL = os.getenv('VERCEL_SITE_URL')
 
 def run():
     prompt_content = prompt.replace("{VERCEL_SITE_URL}", VERCEL_SITE_URL)
@@ -31,7 +31,7 @@ def run():
             elif response['type'] == 'tools':
                 messages.append(response['message'])
                 tool_calls = response['tools']
-                call_messages_list = run_tools(tool_calls, WORKER_DIRECTORY)
+                call_messages_list = run_tools(tool_calls, GIT_DIRECTORY)
                 messages.extend(call_messages_list)
 
 if __name__ == "__main__":

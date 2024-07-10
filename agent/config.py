@@ -32,7 +32,7 @@ vercel支持部署云函数,云函数必须放置在api目录下。
 export default async (req, res) => {
     //some code...
 };
-vercel云函数的前端请求路由是/api/hello
+vercel云函数的前端请求路由是/api/<函数的js文件的文件名，例如如果是hello.js，那么这里就是hello>
 
 [回答规范]
 你的回答风格简洁概括的,除非用户要求详细输出.
