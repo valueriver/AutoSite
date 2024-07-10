@@ -3,7 +3,9 @@
 AutoSite 是一个人工智能驱动的自动化网站机器人项目，旨在通过人工智能理解需求、编写代码、部署发布。此项目利用 OpenAI 的 GPT-4 模型来实现用户与机器人的交互，并自动处理文件操作和 PowerShell 命令执行。
 
 ## 示例效果
+
 需求描述：实现一个对话网站，前端一个按钮，点击后请求后端，显示后端返回的笑话内容。
+
 ### 对话
 ![自动化部署示例](https://pub-20abb0d076b24b52a65a8f98d262b891.r2.dev/20240710101436.png)
 
@@ -46,21 +48,11 @@ git clone https://github.com/your-username/your-new-repository.git
 3. 按照提示完成项目的部署。
 4. 部署完成后，你会获得一个 Vercel 的 URL。
 
-### 6. 配置 Vercel URL 和工作目录
+### 6. 配置环境变量
 
-在 AutoSite 项目的 `main.py` 文件中：
-
-1. 更新 `VERCEL_SITE_URL` 变量，将其设置为你的 Vercel URL：
-
-```python
-VERCEL_SITE_URL = "https://your-project.vercel.app"
-```
-
-2. 更新 `WORKER_DIRECTORY` 变量为你新克隆的项目目录名称：
-
-```python
-WORKER_DIRECTORY = "your-new-repository"
-```
+1.API_KEY和API_URL即openai的apikey和apiurl，如果你暂时没有这些，你可以联系我的微信来购买：WoodChangeLY    
+2.GIT_DIRECTORY是你新建的github项目克隆在当前文件夹的目录名，例如，如果你的项目是gpt5，那么克隆在当前目录后，就会有一个gpt5的目录，那么就把GIT_DIRECTORY设置为gpt5  
+3.VERCEL_SITE_URL是你在vercel部署网站后vercel提供给你的网站在线访问地址。  
 
 ### 7. 运行程序
 
