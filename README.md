@@ -52,7 +52,7 @@ git clone https://github.com/your-username/your-new-repository.git
 
 1.API_KEY和API_URL即openai的apikey和apiurl，如果你暂时没有这些，你可以联系我的微信来购买：WoodChangeLY    
 2.GIT_DIRECTORY是你新建的github项目克隆在当前文件夹的目录名，例如，如果你的项目是gpt5，那么克隆在当前目录后，就会有一个gpt5的目录，那么就把GIT_DIRECTORY设置为gpt5  
-3.VERCEL_SITE_URL是你在vercel部署网站后vercel提供给你的网站在线访问地址。  
+3.VERCEL_SITE_URL是你在vercel部署网站后vercel提供给你的网站在线访问地址。   
 
 ### 7. 运行程序
 
