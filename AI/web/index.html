@@ -10,70 +10,84 @@
 </head>
 
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex justify-center items-center p-4">
-    <div id="app" class="container max-w-4xl w-full mx-auto">
-        <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-indigo-800 mb-2">AutoSite</h1>
-            <p class="text-xl text-gray-600">AI 驱动的网站自动开发部署工具</p>
-        </header>
+    <div id="app" class="container max-w-4xl w-full mx-auto flex">
+        <!-- 侧边栏 -->
+        <aside class="w-1/4 bg-white rounded-2xl shadow-xl overflow-auto p-4">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">会话记录</h2>
+            <ul>
+                <li v-for="chat in chatList" :key="chat.conversationId" @click="loadConversation(chat.conversationId)"
+                    class="cursor-pointer p-2 hover:bg-gray-100 rounded">
+                    <p class="text-sm text-gray-700 truncate">{{ chat.conversationId }}</p>
+                </li>
+            </ul>
+        </aside>
 
-        <main v-if="!apiConfigured" class="bg-white rounded-2xl shadow-xl p-8 transition-all duration-300 ease-in-out">
-            <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">配置 API</h2>
-            <div class="space-y-6">
-                <div>
-                    <label for="apiKey" class="block text-sm font-medium text-gray-700 mb-1">API Key <span
-                            class="text-red-500">*</span></label>
-                    <input id="apiKey" v-model="apiKey" type="password"
-                        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200"
-                        placeholder="输入 OpenAI API Key" required>
+        <!-- 主聊天窗口 -->
+        <div class="w-3/4 ml-4">
+            <header class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-indigo-800 mb-2">AutoSite</h1>
+                <p class="text-xl text-gray-600">AI 驱动的网站自动开发部署工具</p>
+            </header>
+
+            <main v-if="!apiConfigured" class="bg-white rounded-2xl shadow-xl p-8 transition-all duration-300 ease-in-out">
+                <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">配置 API</h2>
+                <div class="space-y-6">
+                    <div>
+                        <label for="apiKey" class="block text-sm font-medium text-gray-700 mb-1">API Key <span
+                                class="text-red-500">*</span></label>
+                        <input id="apiKey" v-model="apiKey" type="password"
+                            class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200"
+                            placeholder="输入 OpenAI API Key" required>
+                    </div>
+                    <div>
+                        <label for="apiUrl" class="block text-sm font-medium text-gray-700 mb-1">API URL <span
+                                class="text-red-500">*</span></label>
+                        <input id="apiUrl" v-model="apiUrl" type="text"
+                            class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200"
+                            placeholder="输入 OpenAI API URL" required>
+                    </div>
+                    <button @click="configureApi"
+                        class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-105">
+                        开始使用 AutoSite
+                    </button>
+                    <p class="text-sm text-gray-600 text-center mt-4">
+                        如果您没有 API，可以通过微信联系 <span class="font-semibold text-indigo-600">WoodChangeLY</span> 购买
+                    </p>
                 </div>
-                <div>
-                    <label for="apiUrl" class="block text-sm font-medium text-gray-700 mb-1">API URL <span
-                            class="text-red-500">*</span></label>
-                    <input id="apiUrl" v-model="apiUrl" type="text"
-                        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200"
-                        placeholder="输入 OpenAI API URL" required>
+            </main>
+
+            <div v-else class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-4 text-white flex justify-between items-center">
+                    <p class="text-sm">会话 ID: <span class="font-medium">{{ conversationId }}</span></p>
+                    <button @click="resetSession"
+                        class="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full hover:bg-opacity-30 transition-colors duration-200">
+                        <i class="fas fa-redo mr-1"></i> 重置会话
+                    </button>
                 </div>
-                <button @click="configureApi"
-                    class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:scale-105">
-                    开始使用 AutoSite
-                </button>
-                <p class="text-sm text-gray-600 text-center mt-4">
-                    如果您没有 API，可以通过微信联系 <span class="font-semibold text-indigo-600">WoodChangeLY</span> 购买
-                </p>
-            </div>
-        </main>
 
-        <div v-else class="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-4 text-white flex justify-between items-center">
-                <p class="text-sm">会话 ID: <span class="font-medium">{{ conversationId }}</span></p>
-                <button @click="resetSession"
-                    class="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full hover:bg-opacity-30 transition-colors duration-200">
-                    <i class="fas fa-redo mr-1"></i> 重置会话
-                </button>
-            </div>
-
-            <div class="flex flex-col" style="height: 70vh;">
-                <div class="flex-grow overflow-auto p-6" ref="chatContainer">
-                    <div v-for="message in messages" :key="message.id" class="mb-4 animate-fade-in">
-                        <div :class="{
-                            'bg-blue-100 text-blue-800 p-4 rounded-2xl max-w-3/4 ml-auto': message.role === 'user',
-                            'bg-gray-100 text-gray-800 p-4 rounded-2xl max-w-3/4': message.role === 'assistant'
-                        }">
-                            <p class="font-bold mb-2">{{ message.role === 'user' ? '👤 您' : '🤖 AutoSite' }}</p>
-                            <p class="text-sm whitespace-pre-wrap">{{ message.content }}</p>
+                <div class="flex flex-col" style="height: 70vh;">
+                    <div class="flex-grow overflow-auto p-6" ref="chatContainer">
+                        <div v-for="message in messages" :key="message.id" class="mb-4 animate-fade-in">
+                            <div :class="{
+                                'bg-blue-100 text-blue-800 p-4 rounded-2xl max-w-3/4 ml-auto': message.role === 'user',
+                                'bg-gray-100 text-gray-800 p-4 rounded-2xl max-w-3/4': message.role === 'assistant'
+                            }">
+                                <p class="font-bold mb-2">{{ message.role === 'user' ? '👤 您' : '🤖 AutoSite' }}</p>
+                                <p class="text-sm whitespace-pre-wrap">{{ message.content }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="p-4 bg-gray-50 border-t">
-                    <div class="flex items-center">
-                        <input v-model="userInput" @keyup.enter="sendMessage"
-                            class="flex-grow p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors duration-200"
-                            placeholder="描述您的网站需求...">
-                        <button @click="sendMessage"
-                            class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-r-lg hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all duration-300 transform hover:scale-105">
-                            <i class="fas fa-paper-plane mr-2"></i>发送
-                        </button>
+                    <div class="p-4 bg-gray-50 border-t">
+                        <div class="flex items-center">
+                            <input v-model="userInput" @keyup.enter="sendMessage"
+                                class="flex-grow p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-300 transition-colors duration-200"
+                                placeholder="描述您的网站需求...">
+                            <button @click="sendMessage"
+                                class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-r-lg hover:from-blue-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all duration-300 transform hover:scale-105">
+                                <i class="fas fa-paper-plane mr-2"></i>发送
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,8 +103,12 @@
                     conversationId: '',
                     apiKey: '',
                     apiUrl: '',
-                    apiConfigured: false
+                    apiConfigured: false,
+                    chatList: []
                 };
+            },
+            mounted() {
+                this.fetchChatList();
             },
             methods: {
                 generateConversationId() {
@@ -103,13 +121,13 @@
                         this.apiConfigured = true;
                         this.conversationId = this.generateConversationId();
                         this.addSystemMessage("欢迎使用 AutoSite！我是您的 AI 助手，可以帮助您设计、开发和部署网站。您可以描述您的需求，我会为您生成相应的代码和执行必要的操作。如需帮助，请随时询问。");
+                        this.fetchChatList();
                     } else {
                         alert('请填写 OpenAI API Key 和 API URL，这两项都是必填的。');
                     }
                 },
                 sendMessage() {
                     if (this.userInput.trim() === '') return;
-
 
                     const userMessage = {
                         role: 'user',
@@ -174,6 +192,30 @@
                         this.conversationId = this.generateConversationId();
                         this.addSystemMessage("会话已重置。您可以开始新的对话了。");
                     }
+                },
+                fetchChatList() {
+                    fetch('/chat/list')
+                        .then(response => response.json())
+                        .then(data => {
+                            this.chatList = data;
+                        })
+                        .catch(error => {
+                            console.error('获取会话记录时出错:', error);
+                        });
+                },
+                loadConversation(conversationId) {
+                    this.conversationId = conversationId;
+                    fetch(`/chat/${conversationId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            this.messages = data.messages;
+                            this.$nextTick(() => {
+                                this.scrollToBottom();
+                            });
+                        })
+                        .catch(error => {
+                            console.error('加载会话记录时出错:', error);
+                        });
                 }
             }
         }).mount('#app');
