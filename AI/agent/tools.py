@@ -96,7 +96,7 @@ available_functions = {
     "run_powershell_command": run_powershell_command
 }
 
-def run_tools(tool_calls):
+def RunTools(tool_calls):
     call_messages_list = []
     for tool_call in tool_calls:
         function_name = tool_call['function']['name']
