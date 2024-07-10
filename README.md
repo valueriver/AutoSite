@@ -68,7 +68,7 @@ python main.py
 
 ## 问题&交流
 
-v: WoodChangeLY
+V: WoodChangeLY
 
 ## 推荐工具
 
