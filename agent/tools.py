@@ -2,10 +2,13 @@ import os
 import json
 import subprocess
 
-def get_directory_structure(directory):
-    
-    print(f"[📁读取工作目录]:{directory}")
-    
+
+def get_directory_structure(directory=None):
+    if directory is None:
+        directory = os.getcwd()
+
+    print(f"[📁读取目录]: {directory}")
+
     if not os.path.exists(directory):
         return json.dumps({
             "status": "error",
@@ -27,10 +30,13 @@ def get_directory_structure(directory):
         }
     })
 
-def write_to_file(data, filename, directory):
-    
+
+def write_to_file(data, filename, directory=None):
+    if directory is None:
+        directory = os.getcwd()
+
     print(f"[⌨️创建文件]：{filename}")
-    
+
     os.makedirs(directory, exist_ok=True)
     filepath = os.path.join(directory, filename)
 
@@ -41,8 +47,11 @@ def write_to_file(data, filename, directory):
     except Exception as e:
         return json.dumps({"status": "error", "message": str(e)})
 
-def read_from_file(filename, directory):
-    
+
+def read_from_file(filename,  directory=None):
+    if directory is None:
+        directory = os.getcwd()
+
     print(f"[💾读取文件]：{filename}")
 
     filepath = os.path.join(directory, filename)
@@ -54,8 +63,11 @@ def read_from_file(filename, directory):
     except FileNotFoundError:
         return json.dumps({"status": "error", "message": f"{filepath} not found"})
 
-def run_powershell_command(command, directory):
-    
+
+def run_powershell_command(command, directory=None):
+    if directory is None:
+        directory = os.getcwd()
+
     print(f"[📟执行命令]：{command}")
 
     warning = None
@@ -76,6 +88,7 @@ def run_powershell_command(command, directory):
             "warning": warning
         })
 
+
 available_functions = {
     "write_to_file": write_to_file,
     "read_from_file": read_from_file,
@@ -83,14 +96,13 @@ available_functions = {
     "run_powershell_command": run_powershell_command
 }
 
-def run_tools(tool_calls, worker_directory):
+def run_tools(tool_calls):
     call_messages_list = []
     for tool_call in tool_calls:
         function_name = tool_call['function']['name']
         function_to_call = available_functions.get(function_name)
         if function_to_call:
             function_args = json.loads(tool_call['function']['arguments'])
-            function_args['directory'] = os.path.join(worker_directory, function_args.get('directory', ''))
             function_response = function_to_call(**function_args)
             call_messages_list.append(
                 {

@@ -14,6 +14,8 @@ AutoSite 是一个人工智能驱动的自动化网站机器人项目，旨在�
 
 ## 使用方法
 
+如果你不知道如何配置，你可以在对话中直接询问ai。
+
 ### 1. 环境准备
 
 确保你的系统已安装 Python 
@@ -31,7 +33,7 @@ cd AutoSite
 
 ### 3. 创建新的 GitHub 项目
 
-创建一个新的私有仓库，仓库中创建一个基础的index.html文件，里面可以随便写点内容，例如：hello world。仓库中创建一个空的api目录，该目录用于部署后端云函数的目录。
+创建一个新的私有仓库，仓库中创建一个基础的index.html文件，里面可以随便写点内容，例如：hello world。
 
 ### 4. 在 AutoSite 根目录克隆新项目
 
@@ -46,13 +48,10 @@ git clone https://github.com/your-username/your-new-repository.git
 1. 登录或注册 [Vercel](https://vercel.com/) 账号。
 2. 点击"New Project"并选择你刚刚在 GitHub 上创建的新项目（不是 AutoSite 项目）。
 3. 按照提示完成项目的部署。
-4. 部署完成后，你会获得一个 Vercel 的 URL。
 
 ### 6. 配置环境变量
 
 1.API_KEY和API_URL即openai的apikey和apiurl，如果你暂时没有这些，你可以联系我的微信来购买：WoodChangeLY    
-2.GIT_DIRECTORY是你新建的github项目克隆在当前文件夹的目录名，例如，如果你的项目是gpt5，那么克隆在当前目录后，就会有一个gpt5的目录，那么就把GIT_DIRECTORY设置为gpt5  
-3.VERCEL_SITE_URL是你在vercel部署网站后vercel提供给你的网站在线访问地址。   
 
 ### 7. 运行程序
 
@@ -64,7 +63,7 @@ python main.py
 
 ### 8. 与 AI 交互
 
-程序启动后，你可以与 AI 进行交流，描述你想要实现的网站功能。AI 将自动编写并部署代码到你新创建的项目中，部署成功后会在浏览器中打开你的网站。
+程序启动后，你可以与 AI 进行交流，描述你想要实现的网站功能。除了网站的开发和部署，实际上它也可以做其它事情，尝试自行探索吧。
 
 ## 问题&交流
 
