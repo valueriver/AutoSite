@@ -99,14 +99,14 @@ available_functions = {
 }
 
 def RunTools(tool_calls):
-    call_messages_list = []
+    tool_messages = []
     for tool_call in tool_calls:
         function_name = tool_call['function']['name']
         function_to_call = available_functions.get(function_name)
         if function_to_call:
             function_args = json.loads(tool_call['function']['arguments'])
             function_response = function_to_call(**function_args)
-            call_messages_list.append(
+            tool_messages.append(
                 {
                     "tool_call_id": tool_call['id'],
                     "role": "tool",
@@ -114,4 +114,4 @@ def RunTools(tool_calls):
                     "content": function_response,
                 }
             )
-    return call_messages_list
+    return tool_messages
