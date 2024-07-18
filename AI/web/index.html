@@ -44,12 +44,42 @@
 
                 <div class="flex-grow overflow-auto p-6" ref="chatContainer">
                     <div v-for="message in messages" :key="message.id" class="mb-4">
-                        <div :class="{
-                            'bg-blue-100 text-blue-800 p-4 rounded-2xl max-w-3/4 ml-auto': message.role === 'user',
-                            'bg-gray-100 text-gray-800 p-4 rounded-2xl max-w-3/4': message.role === 'assistant'
-                        }">
-                            <p class="font-bold mb-2">{{ message.role === 'user' ? '👤 您' : '🤖 AutoSite' }}</p>
+                        <!-- 用户消息 -->
+                        <div v-if="message.role === 'user'"
+                            class="bg-blue-100 text-blue-800 p-4 rounded-2xl max-w-3/4 ml-auto">
+                            <p class="font-bold mb-2">👤 您</p>
                             <p class="text-sm whitespace-pre-wrap">{{ message.content }}</p>
+                        </div>
+                        <!-- 助理消息 -->
+                        <div v-else-if="message.role === 'assistant'"
+                            class="bg-gray-100 text-gray-800 p-4 rounded-2xl max-w-3/4">
+                            <p class="font-bold mb-2">🤖 AutoSite</p>
+                            <p class="text-sm whitespace-pre-wrap">{{ message.content }}</p>
+                            <!-- 显示工具调用内容 -->
+                            <div v-if="message.tool_calls && message.tool_calls.length > 0"
+                                class="mt-2 bg-gray-200 p-2 rounded">
+                                <p class="font-bold">工具调用:</p>
+                                <div v-for="call in message.tool_calls" :key="call.id" class="text-sm">
+                                    <p>函数名: {{ call.function.name }}</p>
+                                    <p>参数: {{ call.function.arguments }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 工具消息 -->
+                        <div v-else-if="message.role === 'tool'"
+                            class="bg-green-100 text-green-800 p-4 rounded-2xl max-w-3/4">
+                            <p class="font-bold mb-2">🔧 工具响应</p>
+                            <p class="text-sm whitespace-pre-wrap">{{ message.content }}</p>
+                            <!-- 解析工具响应中的结构 -->
+                            <div v-if="message.content">
+                                <div v-if="isJson(message.content)">
+                                    <pre
+                                        class="bg-gray-200 p-2 rounded">{{ JSON.stringify(parseJson(message.content), null, 2) }}</pre>
+                                </div>
+                                <div v-else>
+                                    {{ message.content }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -231,6 +261,17 @@
                 },
                 closeSettingsModal() {
                     this.showSettingsModal = false;
+                },
+                isJson(str) {
+                    try {
+                        JSON.parse(str);
+                        return true;
+                    } catch (e) {
+                        return false;
+                    }
+                },
+                parseJson(str) {
+                    return JSON.parse(str);
                 }
             }
         }).mount('#app');
