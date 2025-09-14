@@ -9,7 +9,7 @@ AutoSite 是一个人工智能驱动的自动化网站机器人项目，旨在�
 3.使用命令行和ai交互运行 需要先行设置环境变量API_KEY和API_URL，然后运行 python cli.py  
 4.使用网页和ai交互需要运行先执行 pip install -r requirements.txt 然后运行 python ai.py  
 5.如果一切正常，将会在浏览器自动打开一个网页，在左下角的设置中输入你的openai的apikey和apiurl点击确认后和ai对话  
-6.如果不正常的话，可以联系我解决：WoodChangeLY  
+6.如果不正常的话，可以联系我解决：agentready  
 7.没有apikey也可以联系我
 
 
